@@ -80,10 +80,10 @@ export default () => {
 
       {/* filter */}
       <div class="row" >
-        <div class="col-2">
-          <label>Participants</label>
+        <div class="col-1">
+          Participants
         </div>
-        <div class="col">
+        <div class="col-1" style="margin-left: 10px;">
           <div class="form-check form-check-inline">
             <input
               type="radio"
@@ -97,7 +97,7 @@ export default () => {
           </div>
         </div>
 
-        <div class="col">
+        <div class="col-2">
           <div class="form-check form-check-inline">
             <input
               type="radio"
@@ -111,7 +111,7 @@ export default () => {
           </div>
         </div>
 
-        <div class="col form-check form-check-inline">
+        <div class="col-2 form-check form-check-inline">
           <input
             type="radio"
             name="participation-selection"
@@ -126,10 +126,10 @@ export default () => {
 
       {/* date selection */}
       <div class="row">
-        <div class="col-2">
-          <label>Date</label>
-        </div>
         <div class="col-1">
+          Date
+        </div>
+        <div class="col-1" style="margin-left: 10px;">
           <select class="form-select" onClick={(event) => dateSelected(event.target.value)}>
             <For
               each={participitationDates()}
