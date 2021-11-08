@@ -79,7 +79,7 @@ export default () => {
       </div>
 
       {/* filter */}
-      <div class="row" >
+      <div class="row" style="margin: 10px -10px 0px;">
         <div class="col-1">
           Participants
         </div>
@@ -125,7 +125,7 @@ export default () => {
       </div>
 
       {/* date selection */}
-      <div class="row">
+      <div class="row" style="margin: 10px -10px 10px;">
         <div class="col-1">
           Date
         </div>

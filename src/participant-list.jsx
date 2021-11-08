@@ -1,9 +1,25 @@
+import { Index, For, createMemo, createSignal } from 'solid-js'
 import Participant from './participant'
 
 export default properties => {
+
+  const pages = createMemo(() => {
+    return new Array((Math.ceil(properties.participants.length / 10))).fill(0)
+  })
+
+  const [actualPage, setActualPage] = createSignal(0)
+
+  const participants = () => properties.participants.slice(actualPage() * 10, (actualPage() + 1) * 10 - 1)
+
+  const showFirstPage = () => setActualPage(0)
+  const showPreviousPage = () => setActualPage(actualPage() > 0 ? actualPage() - 1 : actualPage())
+  const showPage = (page) => setActualPage(page)
+  const showNextPage = () => setActualPage(actualPage() < pages().length - 1 ? actualPage() + 1 : actualPage())
+  const showLastPage = () => setActualPage(pages().length -1 )
+
   return (
     <div>
-      <table className="table table-striped table-hover table-bordered">
+      <table class="table table-striped table-hover table-bordered">
         <thead class="table-dark">
         <tr>
           <th scope="col">Name</th>
@@ -13,7 +29,7 @@ export default properties => {
         </thead>
         <tbody>
         <For
-          each={properties.participants}
+          each={participants()}
           fallback={'No Participants!'}
         >{ entry => (
           <tr>
@@ -23,13 +39,39 @@ export default properties => {
         }</For>
         </tbody>
       </table>
-      <nav aria-label="Page navigation example">
-        <ul className="pagination">
-          <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-          <li className="page-item"><a className="page-link" href="#">1</a></li>
-          <li className="page-item"><a className="page-link" href="#">2</a></li>
-          <li className="page-item"><a className="page-link" href="#">3</a></li>
-          <li className="page-item"><a className="page-link" href="#">Next</a></li>
+      <nav>
+        <ul class="pagination">
+          <li class="page-item" onClick={showFirstPage}>
+            <a class="page-link">
+              <i class="bi-chevron-bar-left"/>
+            </a>
+          </li>
+          <li class="page-item" onClick={showPreviousPage}>
+            <a class="page-link">
+              <i class="bi-chevron-left"/>
+            </a>
+          </li>
+          <Index
+            each={pages()}
+          >{(p, index) => (
+            <li
+              class={index === actualPage() ? 'page-item active' : 'page-item'}
+              onClick={[showPage, index]}
+            >
+              <a class="page-link">{index + 1}</a>
+            </li>
+          )}</Index>
+          <li class="page-item" onClick={showNextPage}>
+            <a class="page-link">
+              <i class="bi-chevron-right"/>
+            </a>
+          </li>
+          <li class="page-item" onClick={showLastPage}
+          >
+            <a class="page-link">
+              <i class="bi-chevron-bar-right"/>
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
